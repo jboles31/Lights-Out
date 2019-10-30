@@ -1,0 +1,91 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-wrapper {
+  font-size: 16px;
+  font-family: 'Comfortaa', cursive;
+  
+  .bg {
+    position: fixed; 
+    top: -50%; 
+    left: -50%; 
+    width: 200%; 
+    height: 200%;
+    
+    .background {
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0; 
+      margin: auto; 
+      min-width: 50%;
+      min-height: 50%;
+      width: 100vh;
+      height: 100vh;
+      z-index: 1;
+      color: blue;
+    }
+  }
+  
+  .comps-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+
+    .display {
+      // display: flex;
+      // justify-content: flex-start;
+      // align-items: center;
+      // align-content: space-between;
+      // flex-direction: column;
+      height: 100vh;
+      width: 20%;
+      z-index: 2;
+    }
+    
+    .board-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-content: space-between;
+      flex-direction: column;
+      height: 100vh;
+      width: 80%;
+      z-index: 2;
+
+      .board {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 75vh;
+        width: 75vh;
+
+        .row {
+          display: flex;
+          justify-content: flex-start;
+          flex-direction: row;
+          height: 20%;
+          width: 100%;
+          
+          .lit-tile {
+            height: 100%;
+            width: 20%;
+            background-color: red;
+          }
+
+          .unlit-tile {
+            height: 100%;
+            width: 20%;
+            background-color: black;
+          }
+        }
+      }
+        
+    }
+  }
+}
