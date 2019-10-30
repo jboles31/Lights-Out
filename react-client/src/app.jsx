@@ -16,6 +16,8 @@ class App extends React.Component{
     }
 
     this.randomizeBoard = this.randomizeBoard.bind(this)
+    this.updateBoard = this.updateBoard.bind(this)
+    this.checkBoard = this.checkBoard.bind(this)
   }
 
   //
@@ -40,9 +42,42 @@ class App extends React.Component{
     })
   }
 
-  // updateBoard(row, col) {
+  updateBoard(tileRow, tileCol) {
 
-  // }
+    let copyState = this.state
+    copyState.board.map((row, rowIndex) => {
+      if (rowIndex === tileRow - 1) {
+        row[tileCol] = !row[tileCol]
+      } else if (rowIndex === tileRow + 1) {
+        row[tileCol] = !row[tileCol]
+      } else if (rowIndex === tileRow) {
+        row.map((col, colIndex) => {
+          // debugger;
+          if (colIndex === tileCol || colIndex === tileCol + 1 || colIndex === tileCol - 1) {
+            row[colIndex] = !col
+          }
+        })
+      }
+    })
+    this.setState(copyState);
+    this.checkBoard()
+  }
+
+  checkBoard() {
+    this.state.board.map(row => {
+      row.map(tile => {
+        console.log(tile)
+        if (tile === true) { return false }
+      }
+      )
+    })
+    this.setState({
+      win: true
+    })
+    // if (this.state.win) {
+    //   alert('you won')
+    // }
+  }
 
   componentDidMount() {
     this.randomizeBoard()
@@ -64,6 +99,7 @@ class App extends React.Component{
             />
           <Board
             board={this.state.board}
+            update={this.updateBoard}
           />
         </div>        
       </div>

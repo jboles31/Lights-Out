@@ -5,32 +5,19 @@ const Board = ( props ) => {
   const generateBoard = (board) => {
     let tileContainer = [];
     let result = []
-    let count = 0
 
-    board.map(row => {
-      count += 1
+    board.map((row, rowIndex) => {
       result = []
-      row.map((boolean, index) => {
+      row.map((boolean, colIndex) => {
         boolean ? 
-          result.push(<div className='lit-tile' key={`${row}x${index}`} onClick={() => props.update()}></div>)
+          result.push(<div className='lit-tile' key={`${rowIndex}x${colIndex}`} onClick={() => props.update(rowIndex, colIndex)}></div>)
         :
-          result.push(<div className='unlit-tile' key={`${row}x${index}`} onClick={() => props.update()}></div>)  
+          result.push(<div className='unlit-tile' key={`${rowIndex}x${colIndex}`} onClick={() => props.update(rowIndex, colIndex)}></div>)  
       })
-      tileContainer.push(<div className='row' key={`row${count}`}>{result}</div>);
+      tileContainer.push(<div className='row' key={`row${rowIndex}`}>{result}</div>);
     })
     return (<div className='board'>{tileContainer}</div>)
   }
-
-  // const buttonGen = () => {
-  //   let buttonContainer = [];
-
-  //   let result = [];
-  //   props.movies.map(movie => {
-  //      result.push(<button className={movie} key={movie} onClick={() => props.search({movie}) }>{movie}</button>);
-  //   })
-  //   buttonContainer.push(<div>{result}</div>);
-  //   return buttonContainer
-  // }
   
   return (
     <div className='board-display'>
