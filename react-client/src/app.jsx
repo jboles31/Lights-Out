@@ -2,8 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Display from './components/Display.jsx'
 import Board from './components/Board.jsx'
-import $ from 'jquery'
-import Background from './images/background.jpg'
+import Win from './components/Win.jsx'
 import style from './main.scss';
 
 class App extends React.Component{
@@ -25,6 +24,8 @@ class App extends React.Component{
   // Class Functions
   //
 
+  // Radomize
+
   randomizeBoard(x) {
     let randomize = (x) => {
       let results = []
@@ -43,43 +44,56 @@ class App extends React.Component{
     })
   }
 
-  updateBoard(tileRow, tileCol) {
 
+  // Update
+
+  updateBoard(tileRow, tileCol) {
     let copyState = this.state
+
     copyState.turns = copyState.turns + 1
+
     copyState.board.map((row, rowIndex) => {
-      if (rowIndex === tileRow - 1) {
-        row[tileCol] = !row[tileCol]
-      } else if (rowIndex === tileRow + 1) {
+      if (rowIndex === tileRow - 1 
+        || rowIndex === tileRow + 1) 
+      {
         row[tileCol] = !row[tileCol]
       } else if (rowIndex === tileRow) {
         row.map((col, colIndex) => {
-          // debugger;
-          if (colIndex === tileCol || colIndex === tileCol + 1 || colIndex === tileCol - 1) {
+          if (colIndex === tileCol 
+            || colIndex === tileCol + 1 
+            || colIndex === tileCol - 1) 
+          {
             row[colIndex] = !col
           }
         })
       }
     })
+
     this.setState(copyState);
     this.checkBoard()
   }
 
+
+  // Check for Wins
+
   checkBoard() {
+    let win = true
+
     this.state.board.map(row => {
       row.map(tile => {
-        console.log(tile)
-        if (tile === true) { return false }
-      }
-      )
+        if (tile) { win = false }
+      })
     })
-    this.setState({
-      win: true
-    })
-    // if (this.state.win) {
-    //   alert('you won')
-    // }
+    
+    if (win) {
+      this.setState({
+        win: true
+      })
+    }
   }
+
+
+  // Restart Game
 
   restart() {
     this.setState({
@@ -89,20 +103,21 @@ class App extends React.Component{
     this.randomizeBoard()
   }
 
+  //
+  // 
+
   componentDidMount() {
     this.randomizeBoard()
   }
 
   //
-  // Render App and Comps to index.html
+  // Render App and Comps
   //
 
   render() {
     return (
       <div className="app-wrapper">
-        <div className='bg'>
-          <img className="background" src={Background} ></img>
-        </div>
+        <div className='bg'></div>
         <div className="comps-wrapper">
           <Display 
             turns={this.state.turns}
@@ -113,6 +128,13 @@ class App extends React.Component{
             update={this.updateBoard}
           />
         </div>        
+        {this.state.win ? 
+        <Win 
+          turns={this.state.turns}
+          restart={this.restart}
+        />
+        : null
+        }
       </div>
     )
   }
