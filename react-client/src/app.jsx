@@ -18,6 +18,7 @@ class App extends React.Component{
     this.randomizeBoard = this.randomizeBoard.bind(this)
     this.updateBoard = this.updateBoard.bind(this)
     this.checkBoard = this.checkBoard.bind(this)
+    this.restart = this.restart.bind(this)
   }
 
   //
@@ -45,6 +46,7 @@ class App extends React.Component{
   updateBoard(tileRow, tileCol) {
 
     let copyState = this.state
+    copyState.turns = copyState.turns + 1
     copyState.board.map((row, rowIndex) => {
       if (rowIndex === tileRow - 1) {
         row[tileCol] = !row[tileCol]
@@ -79,6 +81,14 @@ class App extends React.Component{
     // }
   }
 
+  restart() {
+    this.setState({
+      turns: 0,
+      win: false
+    })
+    this.randomizeBoard()
+  }
+
   componentDidMount() {
     this.randomizeBoard()
   }
@@ -96,6 +106,7 @@ class App extends React.Component{
         <div className="comps-wrapper">
           <Display 
             turns={this.state.turns}
+            restart={this.restart}
             />
           <Board
             board={this.state.board}

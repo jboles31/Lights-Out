@@ -8,6 +8,9 @@ const Display = ( props ) => {
         <div className='turn-title'>Turns:</div>
         <div className='turn-number'>{props.turns}</div>
       </div>
+      <div className='restart-container'>
+        <div className='restart' onClick={() => props.restart()}>Restart</div>  
+      </div>
     </div>
   )
 }
