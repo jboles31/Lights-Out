@@ -29,7 +29,7 @@ class App extends React.Component{
   // Radomize
 
   randomizeBoard(x) {
-    // let randomize = (x) => {
+
       let results = []
       for (let i = 0; i < x; i++) {
         let arr = []
@@ -48,7 +48,6 @@ class App extends React.Component{
       board: board
     })
   }
-
 
   // Update
 
