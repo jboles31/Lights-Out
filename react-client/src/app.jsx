@@ -40,7 +40,7 @@ class App extends React.Component{
     }
 
     this.setState({
-      board: randomize(5)
+      board: randomize(x)
     })
   }
 
@@ -107,7 +107,7 @@ class App extends React.Component{
   // 
 
   componentDidMount() {
-    this.randomizeBoard()
+    this.randomizeBoard(5)
   }
 
   //
