@@ -14,14 +14,14 @@ const Board = ( props ) => {
           result.push(<div 
             className='lit-tile' 
             key={`${rowIndex}x${colIndex}`} 
-            onClick={() => props.update(rowIndex, colIndex)}
+            onClick={() => props.update(rowIndex, colIndex, props.board, true)}
             // width={standard}
           ></div>)
         :
           result.push(<div 
             className='unlit-tile' 
             key={`${rowIndex}x${colIndex}`} 
-            onClick={() => props.update(rowIndex, colIndex)}
+            onClick={() => props.update(rowIndex, colIndex, props.board, true)}
             // width={(standard/100) + '%'}
           ></div>)  
       })

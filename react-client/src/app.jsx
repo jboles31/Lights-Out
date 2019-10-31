@@ -15,8 +15,10 @@ class App extends React.Component{
     }
 
     this.randomizeBoard = this.randomizeBoard.bind(this)
+    this.publishBoard = this.publishBoard.bind(this)
     this.updateBoard = this.updateBoard.bind(this)
     this.checkBoard = this.checkBoard.bind(this)
+    this.checkSolvability = this.checkSolvability.bind(this)
     this.restart = this.restart.bind(this)
   }
 
@@ -27,7 +29,7 @@ class App extends React.Component{
   // Radomize
 
   randomizeBoard(x) {
-    let randomize = (x) => {
+    // let randomize = (x) => {
       let results = []
       for (let i = 0; i < x; i++) {
         let arr = []
@@ -36,23 +38,23 @@ class App extends React.Component{
         }
         results.push(arr)
       }
-      return results;
-    }
+      this.checkSolvability(results, x)
+  }
 
+  // Publish Board
+
+  publishBoard(board) {
     this.setState({
-      board: randomize(x)
+      board: board
     })
   }
 
 
   // Update
 
-  updateBoard(tileRow, tileCol) {
-    let copyState = this.state
+  updateBoard(tileRow, tileCol, board, game) {
 
-    copyState.turns = copyState.turns + 1
-
-    copyState.board.map((row, rowIndex) => {
+    board.map((row, rowIndex) => {
       if (rowIndex === tileRow - 1 
         || rowIndex === tileRow + 1) 
       {
@@ -69,8 +71,17 @@ class App extends React.Component{
       }
     })
 
-    this.setState(copyState);
-    this.checkBoard()
+    if (game) {
+      let turns = this.state.turns + 1
+      this.setState({
+        board: board,
+        turns: turns
+      });
+      this.checkBoard()
+    } else {
+      return board
+    }
+
   }
 
 
@@ -92,6 +103,37 @@ class App extends React.Component{
     }
   }
 
+  // Check if Board is Solvable
+
+  checkSolvability(board, x) {
+    let original = JSON.stringify(board)
+
+    board.map((row, rowIndex) => {
+      if (rowIndex < 4) {
+        row.map((tile, colIndex) => {
+          if (tile) {
+            board = this.updateBoard(rowIndex + 1, colIndex, board, false)
+          }
+        })
+      } else {
+        let stringRow = JSON.stringify(row)
+        if (stringRow === "[true,false,false,false,true]" 
+          || stringRow === "[false,true,false,true,false]"
+          || stringRow === "[true,true,true,false,false]"
+          || stringRow === "[false,false,true,true,true]"
+          || stringRow === "[true,false,true,true,false]"
+          || stringRow === "[false,true,true,false,true]"
+          || stringRow === "[true,true,false,true,true]") 
+        {
+          return this.publishBoard(JSON.parse(original))
+        } else {
+          return this.randomizeBoard(x)
+        }
+      }
+    })
+  }
+
+
 
   // Restart Game
 
@@ -100,7 +142,7 @@ class App extends React.Component{
       turns: 0,
       win: false
     })
-    this.randomizeBoard()
+    this.randomizeBoard(5)
   }
 
   //
