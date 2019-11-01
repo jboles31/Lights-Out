@@ -3,6 +3,10 @@ A single-page web app where you can play Lights-Out a 5x5 board game where the o
 
 <img src="https://github.com/jboles31/Lights-Out/blob/master/Lights-Out-Demo.gif" alt="CF-Demo" width="800" height="400">
 
+##### LINK: [https://lights-out-3.herokuapp.com](https://lights-out-3.herokuapp.com)
+
+##### NOTE: It may take heroku 20 seconds or so for first load if it hasn't been viewed recently.
+
 ##### Author: *[Jordan Boles](https://github.com/jboles31)*
 
 ### [Updates Coming]
